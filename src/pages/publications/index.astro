@@ -1,0 +1,203 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const pubs = (await getCollection("publications")).sort(
+  (a, b) => b.data.year - a.data.year,
+);
+
+// Group by year (descending).
+const byYear = new Map<number, typeof pubs>();
+for (const pub of pubs) {
+  const list = byYear.get(pub.data.year) ?? [];
+  list.push(pub);
+  byYear.set(pub.data.year, list);
+}
+const years = [...byYear.keys()].sort((a, b) => b - a);
+
+const typeLabels: Record<string, string> = {
+  paper: "Paper",
+  preprint: "Preprint",
+  talk: "Oral Presentation",
+  poster: "Poster",
+  registration: "Study Registration",
+  chapter: "Book Chapter",
+  workshop: "Workshop",
+  editorial: "Editorial",
+};
+
+// Full literal class strings per type so Tailwind's compiler detects them
+// (dynamically built class names like `bg-${x}-100` are NOT picked up).
+const typeStyles: Record<string, string> = {
+  paper: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
+  preprint: "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300",
+  talk: "bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300",
+  poster: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300",
+  registration: "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300",
+  chapter: "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300",
+  workshop: "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300",
+  editorial: "bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-900/40 dark:text-fuchsia-300",
+};
+
+// Legend order; only types that actually appear are shown, with counts.
+const TYPE_ORDER = [
+  "paper",
+  "editorial",
+  "chapter",
+  "preprint",
+  "registration",
+  "talk",
+  "poster",
+  "workshop",
+];
+const typeCounts = new Map<string, number>();
+for (const pub of pubs) {
+  typeCounts.set(pub.data.type, (typeCounts.get(pub.data.type) ?? 0) + 1);
+}
+const legendTypes = TYPE_ORDER.filter((t) => typeCounts.has(t));
+---
+
+<BaseLayout title="Publications" description="Publications and talks by Vinicius Almeida.">
+  <h1 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+    Publications
+  </h1>
+  <p class="mt-3 text-zinc-600 dark:text-zinc-300">
+    Papers, preprints, and contributions to conferences.
+  </p>
+
+  {
+    pubs.length === 0 ? (
+      <p class="mt-8 text-zinc-500 dark:text-zinc-400">No publications yet.</p>
+    ) : (
+      <>
+        {/* Filter legend */}
+        <div
+          id="type-filter"
+          class="mt-6 flex flex-wrap items-center gap-2"
+          role="group"
+          aria-label="Filter publications by type"
+        >
+          <span class="mr-1 text-xs font-medium uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
+            Filter
+          </span>
+          {legendTypes.map((t) => (
+            <button
+              type="button"
+              data-filter-type={t}
+              aria-pressed="false"
+              class:list={[
+                "inline-flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium transition hover:ring-2 hover:ring-zinc-300 dark:hover:ring-zinc-600",
+                typeStyles[t],
+              ]}
+            >
+              {typeLabels[t]}
+              <span class="opacity-60">{typeCounts.get(t)}</span>
+            </button>
+          ))}
+          <button
+            id="filter-reset"
+            type="button"
+            class="hidden cursor-pointer rounded-full px-2.5 py-1 text-xs font-medium text-zinc-500 underline underline-offset-2 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100"
+          >
+            Show all
+          </button>
+        </div>
+
+        <div class="mt-8 flex flex-col gap-10">
+          {years.map((year) => (
+            <section data-year-section>
+              <h2 class="mb-4 text-sm font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
+                {year}
+              </h2>
+              <ul class="flex flex-col gap-5">
+                {byYear.get(year)!.map((pub) => (
+                  <li class="flex flex-col gap-1" data-pub-type={pub.data.type}>
+                    <p class="font-medium text-zinc-900 dark:text-zinc-100">
+                      {pub.data.title}
+                    </p>
+                    <p class="text-sm text-zinc-600 dark:text-zinc-300">
+                      {pub.data.authors.join(", ")}
+                    </p>
+                    <p class="text-sm text-zinc-500 dark:text-zinc-400">
+                      <span
+                        class:list={[
+                          "rounded px-1.5 py-0.5 text-xs font-medium",
+                          typeStyles[pub.data.type],
+                        ]}
+                      >
+                        {typeLabels[pub.data.type]}
+                      </span>
+                      {" "}
+                      {pub.data.venue}
+                    </p>
+                    <div class="mt-1 flex flex-wrap gap-3 text-sm">
+                      {pub.data.pdf && (
+                        <a href={pub.data.pdf} target="_blank" rel="noopener" class="text-blue-600 hover:underline dark:text-blue-400">
+                          PDF
+                        </a>
+                      )}
+                      {pub.data.url && (
+                        <a href={pub.data.url} target="_blank" rel="noopener" class="text-blue-600 hover:underline dark:text-blue-400">
+                          Link
+                        </a>
+                      )}
+                      {pub.data.doi && (
+                        <a href={`https://doi.org/${pub.data.doi}`} target="_blank" rel="noopener" class="text-blue-600 hover:underline dark:text-blue-400">
+                          DOI
+                        </a>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </>
+    )
+  }
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(
+    "[data-filter-type]",
+  );
+  const entries = document.querySelectorAll<HTMLElement>("[data-pub-type]");
+  const sections = document.querySelectorAll<HTMLElement>("[data-year-section]");
+  const reset = document.getElementById("filter-reset");
+  const active = new Set<string>();
+
+  function apply() {
+    entries.forEach((el) => {
+      const show = active.size === 0 || active.has(el.dataset.pubType ?? "");
+      el.classList.toggle("hidden", !show);
+    });
+    sections.forEach((sec) => {
+      const visible = sec.querySelectorAll(
+        "[data-pub-type]:not(.hidden)",
+      ).length;
+      sec.classList.toggle("hidden", visible === 0);
+    });
+    buttons.forEach((btn) => {
+      const t = btn.dataset.filterType ?? "";
+      const dim = active.size > 0 && !active.has(t);
+      btn.classList.toggle("opacity-40", dim);
+      btn.setAttribute("aria-pressed", active.has(t) ? "true" : "false");
+    });
+    reset?.classList.toggle("hidden", active.size === 0);
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const t = btn.dataset.filterType ?? "";
+      if (active.has(t)) active.delete(t);
+      else active.add(t);
+      apply();
+    });
+  });
+
+  reset?.addEventListener("click", () => {
+    active.clear();
+    apply();
+  });
+</script>

@@ -1,0 +1,89 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
+import { SITE } from "@/consts";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const featured = (await getCollection("research", ({ data }) => data.featured))
+  .sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout title={SITE.title}>
+  <section class="mb-14">
+    <h1 class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+      Vinicius Almeida
+    </h1>
+    <p class="mt-4 text-lg leading-relaxed text-zinc-600 dark:text-zinc-300">
+      Researcher and builder. This is my corner of the web for up-to-date
+      information about my work, research projects, publications, and writing.
+    </p>
+    <p class="mt-3 text-sm text-zinc-500 dark:text-zinc-400">
+      <a href="/about" class="text-blue-600 hover:underline dark:text-blue-400">
+        More about me →
+      </a>
+    </p>
+  </section>
+
+  {
+    featured.length > 0 && (
+      <section class="mb-14">
+        <div class="mb-4 flex items-baseline justify-between">
+          <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+            Featured research
+          </h2>
+          <a href="/research" class="text-sm text-blue-600 hover:underline dark:text-blue-400">
+            All research →
+          </a>
+        </div>
+        <ul class="grid gap-4 sm:grid-cols-2">
+          {featured.map((project) => (
+            <li class="rounded-lg border border-zinc-200 p-4 transition hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700">
+              <a href={`/research/${project.id}`} class="block">
+                <h3 class="font-medium text-zinc-900 dark:text-zinc-100">
+                  {project.data.title}
+                </h3>
+                <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+                  {project.data.summary}
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    posts.length > 0 && (
+      <section>
+        <div class="mb-4 flex items-baseline justify-between">
+          <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+            Latest writing
+          </h2>
+          <a href="/blog" class="text-sm text-blue-600 hover:underline dark:text-blue-400">
+            All posts →
+          </a>
+        </div>
+        <ul class="flex flex-col divide-y divide-zinc-200 dark:divide-zinc-800">
+          {posts.map((post) => (
+            <li class="py-3">
+              <a href={`/blog/${post.id}`} class="group flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                <span class="font-medium text-zinc-800 group-hover:text-blue-600 dark:text-zinc-200 dark:group-hover:text-blue-400">
+                  {post.data.title}
+                </span>
+                <span class="shrink-0 text-sm text-zinc-500 dark:text-zinc-400">
+                  <FormattedDate date={post.data.pubDate} />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</BaseLayout>
