@@ -1,0 +1,55 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import BaseLayout from "./BaseLayout.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
+import TagList from "@/components/TagList.astro";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
+---
+
+<BaseLayout title={title} description={description}>
+  <article>
+    <header class="mb-8 flex flex-col gap-3">
+      <h1 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+        {title}
+      </h1>
+      <p class="text-sm text-zinc-500 dark:text-zinc-400">
+        <FormattedDate date={pubDate} />
+        {
+          updatedDate && (
+            <span> · Updated <FormattedDate date={updatedDate} /></span>
+          )
+        }
+      </p>
+      <TagList tags={tags} />
+    </header>
+
+    {
+      heroImage && (
+        <Image
+          src={heroImage}
+          alt=""
+          class="mb-8 w-full rounded-lg border border-zinc-200 dark:border-zinc-800"
+        />
+      )
+    }
+
+    <div
+      class="prose prose-zinc max-w-none dark:prose-invert prose-headings:scroll-mt-24 prose-a:text-blue-600 dark:prose-a:text-blue-400"
+    >
+      <slot />
+    </div>
+  </article>
+
+  <div class="mt-12 border-t border-zinc-200 pt-6 dark:border-zinc-800">
+    <a href="/blog" class="text-sm text-blue-600 hover:underline dark:text-blue-400">
+      ← Back to all posts
+    </a>
+  </div>
+</BaseLayout>
