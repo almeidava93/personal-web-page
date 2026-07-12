@@ -55,6 +55,7 @@ const publications = defineCollection({
         "editorial",
       ])
       .default("paper"),
+    featured: z.boolean().default(false),
     doi: z.string().optional(),
     pdf: z.string().url().optional(),
     url: z.string().url().optional(),

@@ -11,6 +11,7 @@ authors:
 venue: "JAMIA Open, 9(1), ooag017"
 year: 2026
 type: "paper"
+featured: true
 doi: "10.1093/jamiaopen/ooag017"
 url: "https://academic.oup.com/jamiaopen/article/9/1/ooag017/8494400"
 bibtex: |

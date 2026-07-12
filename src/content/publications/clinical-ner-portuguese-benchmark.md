@@ -17,4 +17,5 @@ year: 2026
 type: "preprint"
 doi: "10.48550/arXiv.2603.26510"
 url: "https://arxiv.org/abs/2603.26510"
+featured: true
 ---
