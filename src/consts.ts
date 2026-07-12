@@ -21,9 +21,15 @@ export const NAV_LINKS = [
 // Footer / contact links. Fill in real handles/URLs.
 // Set `href` to null to hide a link until you have the URL.
 export const SOCIAL_LINKS = [
-  { label: "Email", href: "mailto:vinicius.almeida@spesia.com.br" },
+  { label: "Email", href: "mailto:vinicius.almeida@alumni.usp.br" },
   { label: "GitHub", href: "https://github.com/almeidava93" },
-  { label: "Google Scholar", href: null as string | null },
-  { label: "ORCID", href: null as string | null },
-  { label: "LinkedIn", href: null as string | null },
+  {
+    label: "Google Scholar",
+    href: "https://scholar.google.com.br/citations?user=kZFlD-kAAAAJ",
+  },
+  { label: "ORCID", href: "https://orcid.org/0009-0001-1273-586X" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/vinicius-anjos-de-almeida-06761a135/",
+  },
 ] as const;
