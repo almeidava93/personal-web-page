@@ -11,6 +11,12 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
 const featured = (await getCollection("research", ({ data }) => data.featured))
   .sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf())
   .slice(0, 3);
+
+const selectedPubs = (
+  await getCollection("publications", ({ data }) => data.featured)
+)
+  .sort((a, b) => b.data.year - a.data.year)
+  .slice(0, 4);
 ---
 
 <BaseLayout title={SITE.title}>
@@ -53,6 +59,49 @@ const featured = (await getCollection("research", ({ data }) => data.featured))
               </a>
             </li>
           ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    selectedPubs.length > 0 && (
+      <section class="mb-14">
+        <div class="mb-4 flex items-baseline justify-between">
+          <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+            Selected publications
+          </h2>
+          <a href="/publications" class="text-sm text-blue-600 hover:underline dark:text-blue-400">
+            All publications →
+          </a>
+        </div>
+        <ul class="flex flex-col divide-y divide-zinc-200 dark:divide-zinc-800">
+          {selectedPubs.map((pub) => {
+            const link =
+              pub.data.url ??
+              (pub.data.doi ? `https://doi.org/${pub.data.doi}` : "/publications");
+            const external = link.startsWith("http");
+            return (
+              <li class="py-3">
+                <a
+                  href={link}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener" : undefined}
+                  class="group flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
+                >
+                  <span class="font-medium text-zinc-800 group-hover:text-blue-600 dark:text-zinc-200 dark:group-hover:text-blue-400">
+                    {pub.data.title}
+                  </span>
+                  <span class="shrink-0 text-sm text-zinc-500 dark:text-zinc-400">
+                    {pub.data.year}
+                  </span>
+                </a>
+                <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                  {pub.data.venue}
+                </p>
+              </li>
+            );
+          })}
         </ul>
       </section>
     )

@@ -1,65 +1,172 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
-// Career / academic trajectory. Edit these entries directly.
-const timeline = [
+interface Entry {
+  role: string;
+  org: string;
+  period: string;
+  points?: string[];
+  link?: { label: string; url: string };
+}
+
+// Work experience — order as provided.
+const work: Entry[] = [
   {
-    period: "2025 – present",
-    title: "Your current role",
-    org: "Organization",
-    detail: "One line about what you do here.",
+    role: "Creator & maintainer — Any-to-Any Terminology Mapping (AATM)",
+    org: "Supported by Precision Data",
+    period: "Aug 2025 – present",
+    points: [
+      "Building an open-source solution for semiautomatic terminology mapping in healthcare, powered by modern AI tools and grounded on the OMOP Common Data Model. Project funded by Precision Data and currently under development.",
+    ],
+    link: {
+      label: "precisiondata.github.io/aatm",
+      url: "https://precisiondata.github.io/aatm/",
+    },
   },
   {
-    period: "2023 – 2025",
-    title: "Previous role",
-    org: "Organization",
-    detail: "One line about what you did here.",
+    role: "Research Scientist",
+    org: "Spesia",
+    period: "Sep 2025 – present",
+    points: [
+      "Leading language-modeling research for information extraction from clinical notes focused on breast cancer patient care. Investigating the potential of LLMs for multidisciplinary agentic tumor boards in complex patient scenarios. Building and evaluating information retrieval and clinical decision support pipelines.",
+    ],
   },
   {
-    period: "2019 – 2023",
-    title: "Degree",
-    org: "University",
-    detail: "Field of study.",
+    role: "Medical AI Trainer",
+    org: "micro1",
+    period: "Jan 2025 – Sep 2025",
+    points: [
+      "Contributing physician for the OpenAI HealthBench benchmark, supporting advanced human data initiatives to enhance the safety of AI models. Primary responsibility was to rigorously evaluate the clinical accuracy and quality of AI-generated responses to health queries, directly contributing to the development of safer AI solutions.",
+    ],
   },
+  {
+    role: "Family Doctor & Data Science",
+    org: "Israelite Hospital Albert Einstein",
+    period: "Sep 2021 – Sep 2025",
+    points: [
+      "Clinical practice as a family doctor in a private primary care center.",
+      "Led data science and quality improvement projects in the primary care centers, including patient scheduling optimization and reducing healthcare professionals' after-hours work.",
+    ],
+  },
+  {
+    role: "AI Engineer",
+    org: "Dino's Digital Marketing & Advisory Firm",
+    period: "Apr 2024 – Dec 2024",
+    points: [
+      "Worked on ChartSmarter, an AI-powered application for electronic health records (EHR). Led backend and AI development, implementing voice transcription, EHR API integration, and automated information extraction. Designed and deployed LLM-based form completion, reducing clinician workload by transcribing and pre-filling EHR forms. The system was tailored for rehabilitation clinics in the U.S. using Kipu software.",
+    ],
+  },
+  {
+    role: "Family Medicine Residency Preceptor",
+    org: "University of São Paulo",
+    period: "Mar 2019 – Mar 2020",
+    points: [
+      "Contributed to family doctors' training through lectures, clinical supervision, curriculum planning, and as a research advisor.",
+    ],
+  },
+  {
+    role: "Family Doctor & Technical Lead",
+    org: "Amparo Saúde",
+    period: "Mar 2020 – Aug 2021",
+    points: [
+      "Clinical practice as a family doctor. Led and served as a technical reference for healthcare professionals of a private primary care center.",
+      "Contributed to the digital product team in developing the EHR and a system for automated patient coordination, enhancing longitudinal care.",
+    ],
+  },
+];
+
+// Education.
+const education: Entry[] = [
+  {
+    role: "Doctor of Philosophy — Artificial Intelligence and Healthcare",
+    org: "University of São Paulo",
+    period: "Aug 2022 – Aug 2026 (defense scheduled)",
+    points: [
+      "Research focused on medical coding automation with deep learning. Explored information retrieval algorithms, LLM orchestration, and benchmarking. Experience with every experimental step — from data collection, annotation, and analysis to model training, evaluation, and reporting. Led international collaborations. Led to three publications, including one presented at the NeurIPS 2025 GenAI4Health workshop.",
+    ],
+  },
+  {
+    role: "Professional Certification — Deep Learning: Mastering Neural Networks",
+    org: "MITxPRO",
+    period: "Feb 2023 – Apr 2023",
+    points: [
+      "Hands-on experience with language modeling and computer vision, all implemented from scratch. Projects included pneumonia classification from chest X-rays using several vision architectures, and interpretable neural networks using Grad-CAM. Tutored a student in the following cohort with one-on-one sessions.",
+    ],
+  },
+  {
+    role: "Specialization in Family Medicine — Family Medicine Residency Program",
+    org: "University of São Paulo",
+    period: "Mar 2017 – May 2019",
+  },
+  {
+    role: "Medical Degree — GPA 8.3/10",
+    org: "University of São Paulo",
+    period: "Jan 2011 – Dec 2016",
+  },
+];
+
+const sections: { label: string; entries: Entry[] }[] = [
+  { label: "Work experience", entries: work },
+  { label: "Education", entries: education },
 ];
 ---
 
-<BaseLayout title="About" description="About Vinicius Almeida — bio and trajectory.">
+<BaseLayout title="About" description="About Vinicius Almeida — work experience and education.">
   <h1 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
     About
   </h1>
 
   <div class="prose prose-zinc mt-6 max-w-none dark:prose-invert">
     <p>
-      Write a couple of paragraphs about who you are, your background, and what
-      you focus on. This is the place to give visitors the human context behind
-      the research and writing.
-    </p>
-    <p>
-      You can edit this copy directly in <code>src/pages/about.astro</code>, and
-      update the trajectory timeline below in the same file.
+      Physician and AI researcher working at the intersection of clinical
+      practice, machine learning, and software engineering, with a focus on
+      reliable, clinically grounded systems for healthcare.
     </p>
   </div>
 
-  <h2 class="mt-12 text-xl font-semibold text-zinc-900 dark:text-zinc-100">
-    Trajectory
-  </h2>
-  <ol class="mt-6 border-l border-zinc-200 dark:border-zinc-800">
-    {
-      timeline.map((item) => (
-        <li class="relative ml-4 pb-8 last:pb-0">
-          <span class="absolute -left-[1.375rem] top-1.5 h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">{item.period}</p>
-          <p class="font-medium text-zinc-900 dark:text-zinc-100">
-            {item.title}
-            <span class="font-normal text-zinc-500 dark:text-zinc-400">
-              {" · "}
-              {item.org}
-            </span>
-          </p>
-          <p class="text-sm text-zinc-600 dark:text-zinc-300">{item.detail}</p>
-        </li>
-      ))
-    }
-  </ol>
+  {
+    sections.map((section) => (
+      <section class="mt-12">
+        <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+          {section.label}
+        </h2>
+        <div class="mt-6 flex flex-col gap-8">
+          {section.entries.map((entry) => (
+            <div>
+              <div class="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                <h3 class="font-medium text-zinc-900 dark:text-zinc-100">
+                  {entry.role}
+                </h3>
+                <span class="shrink-0 text-sm text-zinc-500 dark:text-zinc-400">
+                  {entry.period}
+                </span>
+              </div>
+              <p class="text-sm text-zinc-600 dark:text-zinc-300">{entry.org}</p>
+              {entry.points && (
+                <div class="mt-2 flex flex-col gap-2">
+                  {entry.points.map((point) => (
+                    <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                      {point}
+                    </p>
+                  ))}
+                </div>
+              )}
+              {entry.link && (
+                <p class="mt-2 text-sm">
+                  <a
+                    href={entry.link.url}
+                    target="_blank"
+                    rel="noopener"
+                    class="text-blue-600 hover:underline dark:text-blue-400"
+                  >
+                    {entry.link.label} ↗
+                  </a>
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    ))
+  }
 </BaseLayout>
