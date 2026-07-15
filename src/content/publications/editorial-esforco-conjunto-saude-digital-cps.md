@@ -10,6 +10,7 @@ authors:
   - "Ana Luisa Neves"
 venue: "Revista Portuguesa de Medicina Geral e Familiar, 42(2), 90–91"
 year: 2026
+month: 5
 type: "editorial"
 doi: "10.32385/rpmgf.v42i2.14444"
 url: "https://doi.org/10.32385/rpmgf.v42i2.14444"

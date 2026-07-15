@@ -3,7 +3,8 @@ import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
 const pubs = (await getCollection("publications")).sort(
-  (a, b) => b.data.year - a.data.year,
+  (a, b) =>
+    b.data.year - a.data.year || (b.data.month ?? 0) - (a.data.month ?? 0),
 );
 
 // Group by year (descending).

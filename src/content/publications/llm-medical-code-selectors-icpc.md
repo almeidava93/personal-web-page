@@ -10,6 +10,7 @@ authors:
   - "Luis Fernandez Lopez"
 venue: "JAMIA Open, 9(1), ooag017"
 year: 2026
+month: 2
 type: "paper"
 featured: true
 doi: "10.1093/jamiaopen/ooag017"

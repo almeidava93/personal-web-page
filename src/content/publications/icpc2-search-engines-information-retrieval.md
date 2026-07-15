@@ -7,6 +7,7 @@ authors:
   - "Luis Fernandez Lopez"
 venue: "Journal of Medical Artificial Intelligence, 8, 40"
 year: 2025
+month: 12
 type: "paper"
 featured: true
 doi: "10.21037/jmai-24-341"

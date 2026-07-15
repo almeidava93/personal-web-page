@@ -10,6 +10,7 @@ authors:
   - "Luis Fernandez Lopez"
 venue: "NeurIPS GenAI4Health 2025 — The Second Workshop on GenAI for Health: Potential, Trust, and Policy Compliance"
 year: 2025
+month: 10
 type: "poster"
 url: "https://openreview.net/forum?id=Kl7KZwJFEG"
 bibtex: |

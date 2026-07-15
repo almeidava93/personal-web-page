@@ -7,6 +7,7 @@ authors:
   - "Oge Marques"
 venue: "ESMO Real World Data and Digital Oncology, 10, 100419"
 year: 2025
+month: 11
 type: "poster"
 doi: "10.1016/j.esmorw.2025.100419"
 url: "https://doi.org/10.1016/j.esmorw.2025.100419"

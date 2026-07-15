@@ -43,6 +43,7 @@ const publications = defineCollection({
     authors: z.array(z.string()),
     venue: z.string(),
     year: z.number().int(),
+    month: z.number().int().min(1).max(12).optional(),
     type: z
       .enum([
         "paper",

@@ -30,6 +30,7 @@ authors:
   - "Luis Fernandez Lopez"
 venue: "Research Square (preprint)"
 year: 2025
+month: 12
 type: "preprint"
 doi: "10.21203/rs.3.rs-8197118/v1"
 url: "https://doi.org/10.21203/rs.3.rs-8197118/v1"

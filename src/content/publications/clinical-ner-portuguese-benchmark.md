@@ -14,6 +14,7 @@ authors:
   - "Lucas Emanuel Silva e Oliveira"
 venue: "arXiv preprint arXiv:2603.26510 [cs.CL]"
 year: 2026
+month: 3
 type: "preprint"
 doi: "10.48550/arXiv.2603.26510"
 url: "https://arxiv.org/abs/2603.26510"

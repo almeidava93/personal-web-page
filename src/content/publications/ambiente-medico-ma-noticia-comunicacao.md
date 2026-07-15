@@ -7,6 +7,7 @@ authors:
   - "Renério Fráguas Júnior"
 venue: "Revista de Medicina, 92(1), 13–24"
 year: 2013
+month: 3
 type: "paper"
 doi: "10.11606/issn.1679-9836.v92i1p13-24"
 ---

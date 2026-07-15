@@ -7,6 +7,7 @@ authors:
   - "Sandra León-Herrera"
 venue: "OSF Registries (pre-registration)"
 year: 2025
+month: 2
 type: "registration"
 doi: "10.17605/OSF.IO/NH8DY"
 url: "https://osf.io/nh8dy/"

@@ -11,6 +11,7 @@ authors:
   - "Raquel Gómez-Bravo"
 venue: "BMJ Open, 16(1), e109715"
 year: 2026
+month: 1
 type: "paper"
 doi: "10.1136/bmjopen-2025-109715"
 url: "https://bmjopen.bmj.com/content/16/1/e109715"

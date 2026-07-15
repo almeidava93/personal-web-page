@@ -10,6 +10,7 @@ authors:
   - "Luis Fernandez Lopez"
 venue: "arXiv preprint arXiv:2507.14681 [cs.CL]"
 year: 2025
+month: 7
 type: "preprint"
 doi: "10.48550/arXiv.2507.14681"
 url: "https://arxiv.org/abs/2507.14681"
