@@ -18,7 +18,6 @@ venue: "Interactive Journal of Medical Research, 15(1), e80616"
 year: 2026
 month: 6
 type: "paper"
-featured: true
 doi: "10.2196/80616"
 url: "https://doi.org/10.2196/80616"
 ---

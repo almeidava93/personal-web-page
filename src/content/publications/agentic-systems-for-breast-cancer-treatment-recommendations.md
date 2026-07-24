@@ -15,4 +15,5 @@ month: 7
 type: "preprint"
 doi: "10.48550/arXiv.2607.12051"
 url: "https://arxiv.org/abs/2607.12051"
+featured: true
 ---
